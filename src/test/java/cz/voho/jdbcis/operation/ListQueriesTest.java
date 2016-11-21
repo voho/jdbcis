@@ -1,5 +1,6 @@
 package cz.voho.jdbcis.operation;
 
+import cz.voho.jdbcis.operation.model.ConfigurationRow;
 import cz.voho.jdbcis.type.DataType;
 import org.assertj.core.groups.Tuple;
 import org.junit.Test;
@@ -13,8 +14,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(MockitoJUnitRunner.class)
 public class ListQueriesTest extends AbstractOperationTest {
     @Test
-    public void queryForList_ps() throws Exception {
-        final List<ConfigurationRow> list = toTest.queryForList(
+    public void queryForListUsingPreparedStatement() throws Exception {
+        final List<ConfigurationRow> list = toTest().queryForList(
                 "SELECT * FROM configuration WHERE property_id BETWEEN ? AND ? ORDER BY property_id",
                 preparedStatement -> {
                     DataType.INTEGER.setNullableToPreparedStatement(preparedStatement, 1, 101);
@@ -34,8 +35,8 @@ public class ListQueriesTest extends AbstractOperationTest {
     }
 
     @Test
-    public void queryForList_raw() throws Exception {
-        final List<ConfigurationRow> list = toTest.queryForList(
+    public void queryForListUsingRawValues() throws Exception {
+        final List<ConfigurationRow> list = toTest().queryForList(
                 "SELECT * FROM configuration WHERE property_id BETWEEN 101 AND 103 ORDER BY property_id",
                 resultSet -> new ConfigurationRow(
                         DataType.INTEGER.getNullableFromResultSet(resultSet, "property_id"),

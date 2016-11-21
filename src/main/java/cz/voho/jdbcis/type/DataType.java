@@ -5,7 +5,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Created by vojta on 21/11/2016.
+ * Abstraction for a single data type.
+ * Provides easy and transparent conversion between SQL and Java data type.
+ * Removes the necessity of dealing with the {@link ResultSet#wasNull()} methods.
  */
 public interface DataType<T> {
     BigDecimalDataType BIG_DECIMAL = new BigDecimalDataType();

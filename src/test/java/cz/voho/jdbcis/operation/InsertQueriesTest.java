@@ -10,8 +10,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(MockitoJUnitRunner.class)
 public class InsertQueriesTest extends AbstractOperationTest {
     @Test
-    public void testInsert_ps_single() throws Exception {
-        final long actual = toTest.insert("INSERT INTO configuration (property_id, property_value) VALUES (?, ?)", preparedStatement -> {
+    public void testInsertSingleRowUsingPreparedStatement() throws Exception {
+        final long actual = toTest().insert("INSERT INTO configuration (property_id, property_value) VALUES (?, ?)", preparedStatement -> {
             DataType.INTEGER.setNullableToPreparedStatement(preparedStatement, 1, 1);
             DataType.STRING.setNullableToPreparedStatement(preparedStatement, 2, "type-1");
         });
@@ -20,8 +20,8 @@ public class InsertQueriesTest extends AbstractOperationTest {
     }
 
     @Test
-    public void testInsert_ps_multi() throws Exception {
-        final long actual = toTest.insert("INSERT INTO configuration (property_id, property_value) VALUES (?, ?), (?, ?)", preparedStatement -> {
+    public void testInsertMultipleRowsUsingPreparedStatement() throws Exception {
+        final long actual = toTest().insert("INSERT INTO configuration (property_id, property_value) VALUES (?, ?), (?, ?)", preparedStatement -> {
             DataType.INTEGER.setNullableToPreparedStatement(preparedStatement, 1, 1);
             DataType.STRING.setNullableToPreparedStatement(preparedStatement, 2, "type-1");
             DataType.INTEGER.setNullableToPreparedStatement(preparedStatement, 3, 2);
@@ -32,8 +32,8 @@ public class InsertQueriesTest extends AbstractOperationTest {
     }
 
     @Test
-    public void testInsert_raw() throws Exception {
-        final long actual = toTest.insert("INSERT INTO configuration (property_id, property_value) VALUES (2, 'type-2')");
+    public void testInsertSingleRowUsingRawValues() throws Exception {
+        final long actual = toTest().insert("INSERT INTO configuration (property_id, property_value) VALUES (2, 'type-2')");
 
         assertThat(actual).isEqualTo(1);
     }

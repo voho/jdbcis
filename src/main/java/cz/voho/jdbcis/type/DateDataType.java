@@ -8,12 +8,13 @@ import java.sql.Types;
 import java.time.LocalDate;
 
 /**
- * Created by vojta on 21/11/2016.
+ * Abstraction for the LocalDate type.
+ * @see Types#DATE
  */
 public class DateDataType implements DataType<LocalDate> {
     @Override
-    public LocalDate getNullableFromResultSet(ResultSet resultSet, int columnIndex) throws SQLException {
-        Date result = resultSet.getDate(columnIndex);
+    public LocalDate getNullableFromResultSet(final ResultSet resultSet, final int columnIndex) throws SQLException {
+        final Date result = resultSet.getDate(columnIndex);
         if (result == null || resultSet.wasNull()) {
             return null;
         }
@@ -21,8 +22,8 @@ public class DateDataType implements DataType<LocalDate> {
     }
 
     @Override
-    public LocalDate getNullableFromResultSet(ResultSet resultSet, String columnName) throws SQLException {
-        Date result = resultSet.getDate(columnName);
+    public LocalDate getNullableFromResultSet(final ResultSet resultSet, final String columnName) throws SQLException {
+        final Date result = resultSet.getDate(columnName);
         if (result == null || resultSet.wasNull()) {
             return null;
         }
@@ -30,7 +31,7 @@ public class DateDataType implements DataType<LocalDate> {
     }
 
     @Override
-    public void setNullableToPreparedStatement(PreparedStatement preparedStatement, int parameterIndex, LocalDate value) throws SQLException {
+    public void setNullableToPreparedStatement(final PreparedStatement preparedStatement, final int parameterIndex, final LocalDate value) throws SQLException {
         preparedStatement.setObject(parameterIndex, Date.valueOf(value), Types.DATE);
     }
 }

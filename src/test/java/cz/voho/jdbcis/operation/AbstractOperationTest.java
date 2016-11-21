@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 abstract class AbstractOperationTest {
     private CountingConnectionManager connectionManager;
 
-    JdbcOperations toTest;
+    private JdbcOperations toTest;
 
     @Before
     public void setUp() throws SQLException {
@@ -37,5 +37,9 @@ abstract class AbstractOperationTest {
     public void tearDown() {
         assertThat(connectionManager.getUnreleasedConnectionCount()).isZero();
         System.out.println("Valid connection handling verified for: " + getClass().getSimpleName());
+    }
+
+    public JdbcOperations toTest() {
+        return toTest;
     }
 }

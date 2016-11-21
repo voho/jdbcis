@@ -8,12 +8,13 @@ import java.sql.Types;
 import java.time.LocalDateTime;
 
 /**
- * Created by vojta on 21/11/2016.
+ * Abstraction for the LocalDateTime type.
+ * @see Types#TIMESTAMP
  */
 public class DateTimeDataType implements DataType<LocalDateTime> {
     @Override
-    public LocalDateTime getNullableFromResultSet(ResultSet resultSet, int columnIndex) throws SQLException {
-        Timestamp result = resultSet.getTimestamp(columnIndex);
+    public LocalDateTime getNullableFromResultSet(final ResultSet resultSet, final int columnIndex) throws SQLException {
+        final Timestamp result = resultSet.getTimestamp(columnIndex);
         if (result == null || resultSet.wasNull()) {
             return null;
         }
@@ -21,8 +22,8 @@ public class DateTimeDataType implements DataType<LocalDateTime> {
     }
 
     @Override
-    public LocalDateTime getNullableFromResultSet(ResultSet resultSet, String columnName) throws SQLException {
-        Timestamp result = resultSet.getTimestamp(columnName);
+    public LocalDateTime getNullableFromResultSet(final ResultSet resultSet, final String columnName) throws SQLException {
+        final Timestamp result = resultSet.getTimestamp(columnName);
         if (result == null || resultSet.wasNull()) {
             return null;
         }
@@ -30,7 +31,7 @@ public class DateTimeDataType implements DataType<LocalDateTime> {
     }
 
     @Override
-    public void setNullableToPreparedStatement(PreparedStatement preparedStatement, int parameterIndex, LocalDateTime value) throws SQLException {
+    public void setNullableToPreparedStatement(final PreparedStatement preparedStatement, final int parameterIndex, final LocalDateTime value) throws SQLException {
         preparedStatement.setObject(parameterIndex, Timestamp.valueOf(value), Types.TIMESTAMP);
     }
 }

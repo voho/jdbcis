@@ -8,12 +8,13 @@ import java.sql.Types;
 import java.time.LocalTime;
 
 /**
- * Created by vojta on 21/11/2016.
+ * Abstraction for the LocalTime type.
+ * @see Types#TIME
  */
 public class TimeDataType implements DataType<LocalTime> {
     @Override
-    public LocalTime getNullableFromResultSet(ResultSet resultSet, int columnIndex) throws SQLException {
-        Time result = resultSet.getTime(columnIndex);
+    public LocalTime getNullableFromResultSet(final ResultSet resultSet, final int columnIndex) throws SQLException {
+        final Time result = resultSet.getTime(columnIndex);
         if (result == null || resultSet.wasNull()) {
             return null;
         }
@@ -21,8 +22,8 @@ public class TimeDataType implements DataType<LocalTime> {
     }
 
     @Override
-    public LocalTime getNullableFromResultSet(ResultSet resultSet, String columnName) throws SQLException {
-        Time result = resultSet.getTime(columnName);
+    public LocalTime getNullableFromResultSet(final ResultSet resultSet, final String columnName) throws SQLException {
+        final Time result = resultSet.getTime(columnName);
         if (result == null || resultSet.wasNull()) {
             return null;
         }
@@ -30,7 +31,7 @@ public class TimeDataType implements DataType<LocalTime> {
     }
 
     @Override
-    public void setNullableToPreparedStatement(PreparedStatement preparedStatement, int parameterIndex, LocalTime value) throws SQLException {
+    public void setNullableToPreparedStatement(final PreparedStatement preparedStatement, final int parameterIndex, final LocalTime value) throws SQLException {
         preparedStatement.setObject(parameterIndex, value, Types.TIME);
     }
 }

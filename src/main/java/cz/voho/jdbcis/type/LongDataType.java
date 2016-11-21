@@ -6,12 +6,13 @@ import java.sql.SQLException;
 import java.sql.Types;
 
 /**
- * Created by vojta on 21/11/2016.
+ * Abstraction for the Long type.
+ * @see Types#BIGINT
  */
-public class LongDataType implements DataType<Long> {
+class LongDataType implements DataType<Long> {
     @Override
-    public Long getNullableFromResultSet(ResultSet resultSet, int columnIndex) throws SQLException {
-        long result = resultSet.getLong(columnIndex);
+    public Long getNullableFromResultSet(final ResultSet resultSet, final int columnIndex) throws SQLException {
+        final long result = resultSet.getLong(columnIndex);
         if (resultSet.wasNull()) {
             return null;
         }
@@ -19,8 +20,8 @@ public class LongDataType implements DataType<Long> {
     }
 
     @Override
-    public Long getNullableFromResultSet(ResultSet resultSet, String columnName) throws SQLException {
-        long result = resultSet.getLong(columnName);
+    public Long getNullableFromResultSet(final ResultSet resultSet, final String columnName) throws SQLException {
+        final long result = resultSet.getLong(columnName);
         if (resultSet.wasNull()) {
             return null;
         }
@@ -28,7 +29,7 @@ public class LongDataType implements DataType<Long> {
     }
 
     @Override
-    public void setNullableToPreparedStatement(PreparedStatement preparedStatement, int parameterIndex, Long value) throws SQLException {
+    public void setNullableToPreparedStatement(final PreparedStatement preparedStatement, final int parameterIndex, final Long value) throws SQLException {
         preparedStatement.setObject(parameterIndex, value, Types.BIGINT);
     }
 }

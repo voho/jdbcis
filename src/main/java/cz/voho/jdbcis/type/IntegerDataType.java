@@ -6,12 +6,13 @@ import java.sql.SQLException;
 import java.sql.Types;
 
 /**
- * Created by vojta on 21/11/2016.
+ * Abstraction for the Integer type.
+ * @see Types#INTEGER
  */
 public class IntegerDataType implements DataType<Integer> {
     @Override
-    public Integer getNullableFromResultSet(ResultSet resultSet, int columnIndex) throws SQLException {
-        int result = resultSet.getInt(columnIndex);
+    public Integer getNullableFromResultSet(final ResultSet resultSet, final int columnIndex) throws SQLException {
+        final int result = resultSet.getInt(columnIndex);
         if (resultSet.wasNull()) {
             return null;
         }
@@ -19,8 +20,8 @@ public class IntegerDataType implements DataType<Integer> {
     }
 
     @Override
-    public Integer getNullableFromResultSet(ResultSet resultSet, String columnName) throws SQLException {
-        int result = resultSet.getInt(columnName);
+    public Integer getNullableFromResultSet(final ResultSet resultSet, final String columnName) throws SQLException {
+        final int result = resultSet.getInt(columnName);
         if (resultSet.wasNull()) {
             return null;
         }
@@ -28,7 +29,7 @@ public class IntegerDataType implements DataType<Integer> {
     }
 
     @Override
-    public void setNullableToPreparedStatement(PreparedStatement preparedStatement, int parameterIndex, Integer value) throws SQLException {
+    public void setNullableToPreparedStatement(final PreparedStatement preparedStatement, final int parameterIndex, final Integer value) throws SQLException {
         preparedStatement.setObject(parameterIndex, value, Types.INTEGER);
     }
 }

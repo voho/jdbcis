@@ -7,21 +7,22 @@ import java.sql.SQLException;
 import java.sql.Types;
 
 /**
- * Created by vojta on 21/11/2016.
+ * Abstraction for the BigDecimal type.
+ * @see Types#DECIMAL
  */
 public class BigDecimalDataType implements DataType<BigDecimal> {
     @Override
-    public BigDecimal getNullableFromResultSet(ResultSet resultSet, int columnIndex) throws SQLException {
+    public BigDecimal getNullableFromResultSet(final ResultSet resultSet, final int columnIndex) throws SQLException {
         return resultSet.getBigDecimal(columnIndex);
     }
 
     @Override
-    public BigDecimal getNullableFromResultSet(ResultSet resultSet, String columnName) throws SQLException {
+    public BigDecimal getNullableFromResultSet(final ResultSet resultSet, final String columnName) throws SQLException {
         return resultSet.getBigDecimal(columnName);
     }
 
     @Override
-    public void setNullableToPreparedStatement(PreparedStatement preparedStatement, int parameterIndex, BigDecimal value) throws SQLException {
+    public void setNullableToPreparedStatement(final PreparedStatement preparedStatement, final int parameterIndex, final BigDecimal value) throws SQLException {
         preparedStatement.setObject(parameterIndex, value, Types.DECIMAL);
     }
 }
