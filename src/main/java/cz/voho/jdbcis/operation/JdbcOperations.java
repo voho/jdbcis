@@ -1,5 +1,6 @@
 package cz.voho.jdbcis.operation;
 
+import cz.voho.jdbcis.exception.IncorrectGeneratedKeyResultSizeException;
 import cz.voho.jdbcis.exception.IncorrectResultSizeSQLException;
 import cz.voho.jdbcis.integration.ConnectionManager;
 import cz.voho.jdbcis.integration.SingleConnectionManager;
@@ -102,7 +103,17 @@ public class JdbcOperations implements SelectJdbcOperations, InsertJdbcOperation
 
             if (affectedRows == 1) {
                 try (ResultSet generatedKeysResultSet = preparedStatement.getGeneratedKeys()) {
-                    return generatedKeyRowMapper.apply(generatedKeysResultSet);
+                    K mappedKeyAlreadyFound = null;
+
+                    while (generatedKeysResultSet.next()) {
+                        if (mappedKeyAlreadyFound == null) {
+                            mappedKeyAlreadyFound = generatedKeyRowMapper.apply(generatedKeysResultSet);
+                        } else {
+                            throw new IncorrectGeneratedKeyResultSizeException();
+                        }
+                    }
+
+                    return mappedKeyAlreadyFound;
                 }
             } else {
                 throw new IncorrectResultSizeSQLException(1, affectedRows);

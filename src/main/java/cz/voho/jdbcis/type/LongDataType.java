@@ -9,7 +9,7 @@ import java.sql.Types;
  * Abstraction for the Long type.
  * @see Types#BIGINT
  */
-class LongDataType implements DataType<Long> {
+public class LongDataType implements DataType<Long> {
     @Override
     public Long getNullableFromResultSet(final ResultSet resultSet, final int columnIndex) throws SQLException {
         final long result = resultSet.getLong(columnIndex);

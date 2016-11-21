@@ -1,12 +1,20 @@
-DROP TABLE configuration IF EXISTS;
+DROP TABLE t IF EXISTS;
 
-CREATE TABLE configuration (
-  property_id    INTEGER,
-  property_value TEXT
+CREATE TABLE t (
+  c_pk BIGINT PRIMARY KEY AUTO_INCREMENT,
+  c_decimal DECIMAL,
+  c_date DATE,
+  c_timestamp TIMESTAMP,
+  c_double DOUBLE,
+  c_integer INTEGER,
+  c_bigint BIGINT,
+  c_varchar VARCHAR(100),
+  c_text TEXT,
+  c_time TIME
 );
 
-INSERT INTO configuration (property_id, property_value) VALUES (101, 'value-101');
-INSERT INTO configuration (property_id, property_value) VALUES (102, 'value-102');
-INSERT INTO configuration (property_id, property_value) VALUES (103, 'value-103');
-
-INSERT INTO configuration (property_id, property_value) VALUES (1000, 'original-value');
+INSERT INTO t (c_text) VALUES ('Predefined-1');
+INSERT INTO t (c_text) VALUES ('Predefined-2');
+INSERT INTO t (c_text) VALUES ('Predefined-3');
+INSERT INTO t (c_text) VALUES ('Predefined-4');
+INSERT INTO t (c_text) VALUES ('Predefined-5');

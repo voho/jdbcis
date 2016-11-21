@@ -10,7 +10,7 @@ public class IncorrectResultSizeSQLException extends SQLException {
     private final long actualResultSize;
 
     public IncorrectResultSizeSQLException(final long expectedResultSize, final long actualResultSize) {
-        super(String.format("Incorrect result size (expected = %d, actual = %d).", expectedResultSize, actualResultSize));
+        super(String.format("Incorrect result size (expected = %d, actual = %d). Please check your SELECT SQL query.", expectedResultSize, actualResultSize));
         this.expectedResultSize = expectedResultSize;
         this.actualResultSize = actualResultSize;
     }

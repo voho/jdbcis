@@ -1,8 +1,7 @@
 package cz.voho.jdbcis.operation;
 
-import cz.voho.jdbcis.operation.model.ConfigurationRow;
+import cz.voho.jdbcis.operation.model.TestRow;
 import cz.voho.jdbcis.type.DataType;
-import org.assertj.core.groups.Tuple;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -15,40 +14,38 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ListQueriesTest extends AbstractOperationTest {
     @Test
     public void queryForListUsingPreparedStatement() throws Exception {
-        final List<ConfigurationRow> list = toTest().queryForList(
-                "SELECT * FROM configuration WHERE property_id BETWEEN ? AND ? ORDER BY property_id",
-                preparedStatement -> {
-                    DataType.INTEGER.setNullableToPreparedStatement(preparedStatement, 1, 101);
-                    DataType.INTEGER.setNullableToPreparedStatement(preparedStatement, 2, 103);
-                }, resultSet -> new ConfigurationRow(
-                        DataType.INTEGER.getNullableFromResultSet(resultSet, "property_id"),
-                        DataType.STRING.getNullableFromResultSet(resultSet, "property_value")
-                ));
+        final List<TestRow> list = toTest().queryForList(
+                "SELECT * FROM t WHERE c_text LIKE ?",
+                preparedStatement -> DataType.STRING.setNullableToPreparedStatement(preparedStatement, 1, "Predefined-%"),
+                TestRow.ROW_MAPPER
+        );
 
         assertThat(list)
-                .extracting(ConfigurationRow::getId, ConfigurationRow::getValue)
-                .containsExactly(
-                        Tuple.tuple(101, "value-101"),
-                        Tuple.tuple(102, "value-102"),
-                        Tuple.tuple(103, "value-103")
+                .extracting(TestRow::getcString)
+                .contains(
+                        "Predefined-1",
+                        "Predefined-2",
+                        "Predefined-3",
+                        "Predefined-4",
+                        "Predefined-5"
                 );
     }
 
     @Test
     public void queryForListUsingRawValues() throws Exception {
-        final List<ConfigurationRow> list = toTest().queryForList(
-                "SELECT * FROM configuration WHERE property_id BETWEEN 101 AND 103 ORDER BY property_id",
-                resultSet -> new ConfigurationRow(
-                        DataType.INTEGER.getNullableFromResultSet(resultSet, "property_id"),
-                        DataType.STRING.getNullableFromResultSet(resultSet, "property_value")
-                ));
+        final List<TestRow> list = toTest().queryForList(
+                "SELECT * FROM t WHERE c_text LIKE 'Predefined-%'",
+                TestRow.ROW_MAPPER
+        );
 
         assertThat(list)
-                .extracting(ConfigurationRow::getId, ConfigurationRow::getValue)
-                .containsExactly(
-                        Tuple.tuple(101, "value-101"),
-                        Tuple.tuple(102, "value-102"),
-                        Tuple.tuple(103, "value-103")
+                .extracting(TestRow::getcString)
+                .contains(
+                        "Predefined-1",
+                        "Predefined-2",
+                        "Predefined-3",
+                        "Predefined-4",
+                        "Predefined-5"
                 );
     }
 }
