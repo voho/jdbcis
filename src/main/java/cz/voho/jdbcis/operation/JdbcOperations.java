@@ -32,7 +32,7 @@ public class JdbcOperations implements SelectJdbcOperations, InsertJdbcOperation
         final Connection connection = acquireConnection();
         final List<T> result = new ArrayList<T>();
 
-        try (PreparedStatement preparedStatement = prepareStatement(connection, sql)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             if (preparedStatementSetter != null) {
                 preparedStatementSetter.apply(preparedStatement);
             }
@@ -67,22 +67,12 @@ public class JdbcOperations implements SelectJdbcOperations, InsertJdbcOperation
 
     @Override
     public long insert(final String sql) throws SQLException {
-        return insert(sql, null);
+        return update(sql);
     }
 
     @Override
     public long insert(final String sql, final PreparedStatementSetter preparedStatementSetter) throws SQLException {
-        final Connection connection = acquireConnection();
-
-        try (PreparedStatement preparedStatement = prepareStatement(connection, sql)) {
-            if (preparedStatementSetter != null) {
-                preparedStatementSetter.apply(preparedStatement);
-            }
-
-            return preparedStatement.executeUpdate();
-        } finally {
-            releaseConnection(connection);
-        }
+        return update(sql, preparedStatementSetter);
     }
 
     @Override
@@ -94,7 +84,7 @@ public class JdbcOperations implements SelectJdbcOperations, InsertJdbcOperation
     public <K> K insertSingleAndGetKey(final String sql, final PreparedStatementSetter preparedStatementSetter, final RowMapper<K> generatedKeyRowMapper) throws SQLException {
         final Connection connection = acquireConnection();
 
-        try (PreparedStatement preparedStatement = prepareStatement(connection, sql)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             if (preparedStatementSetter != null) {
                 preparedStatementSetter.apply(preparedStatement);
             }
@@ -142,7 +132,7 @@ public class JdbcOperations implements SelectJdbcOperations, InsertJdbcOperation
     public long update(final String sql, final PreparedStatementSetter preparedStatementSetter) throws SQLException {
         final Connection connection = acquireConnection();
 
-        try (PreparedStatement preparedStatement = prepareStatement(connection, sql)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             if (preparedStatementSetter != null) {
                 preparedStatementSetter.apply(preparedStatement);
             }
@@ -159,10 +149,6 @@ public class JdbcOperations implements SelectJdbcOperations, InsertJdbcOperation
 
     private void releaseConnection(final Connection connection) throws SQLException {
         connectionManager.releaseConnection(connection);
-    }
-
-    private PreparedStatement prepareStatement(final Connection connection, final String sql) throws SQLException {
-        return connection.prepareStatement(sql);
     }
 
     @Override
