@@ -12,21 +12,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class SingleQueriesTest extends AbstractOperationTest {
     @Test
     public void queryForSingleRowUsingPreparedStatement() throws Exception {
-        TestRow row = toTest().queryForSingle(
-                "SELECT * FROM t WHERE c_pk = ?",
+        final TestRow row = toTest().queryForSingle(
+                "SELECT c_pk,c_decimal,c_date,c_timestamp,c_double,c_integer,c_bigint,c_varchar,c_text,c_time FROM t WHERE c_pk = ?",
                 preparedStatement -> DataType.LONG.setNullableToPreparedStatement(preparedStatement, 1, 1L),
                 TestRow.ROW_MAPPER);
 
-        assertThat(row.getcString()).isEqualTo("Predefined-1");
+        assertThat(row.getcLongString()).isEqualTo("Predefined-1");
     }
-
 
     @Test
     public void queryForSingleRowUsingRawValues() throws Exception {
-        TestRow row = toTest().queryForSingle(
-                "SELECT * FROM t WHERE c_pk = 1",
+        final TestRow row = toTest().queryForSingle(
+                "SELECT c_pk,c_decimal,c_date,c_timestamp,c_double,c_integer,c_bigint,c_varchar,c_text,c_time FROM t WHERE c_pk = 1",
                 TestRow.ROW_MAPPER);
 
-        assertThat(row.getcString()).isEqualTo("Predefined-1");
+        assertThat(row.getcLongString()).isEqualTo("Predefined-1");
     }
 }

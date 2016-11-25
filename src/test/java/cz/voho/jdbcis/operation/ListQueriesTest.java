@@ -15,13 +15,13 @@ public class ListQueriesTest extends AbstractOperationTest {
     @Test
     public void queryForListUsingPreparedStatement() throws Exception {
         final List<TestRow> list = toTest().queryForList(
-                "SELECT * FROM t WHERE c_text LIKE ?",
+                "SELECT c_pk,c_decimal,c_date,c_timestamp,c_double,c_integer,c_bigint,c_varchar,c_text,c_time FROM t WHERE c_text LIKE ?",
                 preparedStatement -> DataType.STRING.setNullableToPreparedStatement(preparedStatement, 1, "Predefined-%"),
                 TestRow.ROW_MAPPER
         );
 
         assertThat(list)
-                .extracting(TestRow::getcString)
+                .extracting(TestRow::getcLongString)
                 .contains(
                         "Predefined-1",
                         "Predefined-2",
@@ -34,12 +34,12 @@ public class ListQueriesTest extends AbstractOperationTest {
     @Test
     public void queryForListUsingRawValues() throws Exception {
         final List<TestRow> list = toTest().queryForList(
-                "SELECT * FROM t WHERE c_text LIKE 'Predefined-%'",
+                "SELECT c_pk,c_decimal,c_date,c_timestamp,c_double,c_integer,c_bigint,c_varchar,c_text,c_time FROM t WHERE c_text LIKE 'Predefined-%'",
                 TestRow.ROW_MAPPER
         );
 
         assertThat(list)
-                .extracting(TestRow::getcString)
+                .extracting(TestRow::getcLongString)
                 .contains(
                         "Predefined-1",
                         "Predefined-2",

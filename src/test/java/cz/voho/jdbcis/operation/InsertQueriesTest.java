@@ -44,7 +44,6 @@ public class InsertQueriesTest extends AbstractOperationTest {
         assertThat(actual).isGreaterThan(1);
     }
 
-
     @Test
     public void testInsertSingleRowAndGetKeyUsingRawValues() throws Exception {
         final Long actual = toTest().insertSingleAndGetFirstLongKey("INSERT INTO t (c_text) VALUES ('testInsertSingleRowAndGetKeyUsingRawValues')");

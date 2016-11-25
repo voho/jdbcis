@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class UpdateQueriesTest extends AbstractOperationTest {
     @Test
     public void updateSingleRowUsingPreparedStatement() throws Exception {
-        long actual = toTest().update("UPDATE t SET c_text = ?", preparedStatement -> {
+        final long actual = toTest().update("UPDATE t SET c_text = ?", preparedStatement -> {
             DataType.STRING.setNullableToPreparedStatement(preparedStatement, 1, "updateSingleRowUsingPreparedStatement");
         });
 
@@ -20,7 +20,7 @@ public class UpdateQueriesTest extends AbstractOperationTest {
 
     @Test
     public void updateSingleRowUsingRawValues() throws Exception {
-        long actual = toTest().update("UPDATE t SET c_text = 'updateSingleRowUsingRawValues'");
+        final long actual = toTest().update("UPDATE t SET c_text = 'updateSingleRowUsingRawValues'");
 
         assertThat(actual).isEqualTo(5L);
     }
