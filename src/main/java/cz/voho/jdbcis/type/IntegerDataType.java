@@ -20,15 +20,6 @@ public class IntegerDataType implements DataType<Integer> {
     }
 
     @Override
-    public Integer getNullableFromResultSet(final ResultSet resultSet, final String columnName) throws SQLException {
-        final int result = resultSet.getInt(columnName);
-        if (resultSet.wasNull()) {
-            return null;
-        }
-        return result;
-    }
-
-    @Override
     public void setNullableToPreparedStatement(final PreparedStatement preparedStatement, final int parameterIndex, final Integer value) throws SQLException {
         preparedStatement.setObject(parameterIndex, value, Types.INTEGER);
     }

@@ -12,11 +12,6 @@ public class StringDataType implements DataType<String> {
         return resultSet.getString(columnIndex);
     }
 
-    @Override
-    public String getNullableFromResultSet(final ResultSet resultSet, final String columnLabel) throws SQLException {
-        return resultSet.getString(columnLabel);
-    }
-
     public void setNullableToPreparedStatement(final PreparedStatement preparedStatement, final int parameterIndex, final String value) throws SQLException {
         preparedStatement.setString(parameterIndex, value);
     }

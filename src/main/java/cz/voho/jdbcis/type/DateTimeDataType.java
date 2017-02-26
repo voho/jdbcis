@@ -1,10 +1,6 @@
 package cz.voho.jdbcis.type;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.sql.Types;
+import java.sql.*;
 import java.time.LocalDateTime;
 
 /**
@@ -15,15 +11,6 @@ public class DateTimeDataType implements DataType<LocalDateTime> {
     @Override
     public LocalDateTime getNullableFromResultSet(final ResultSet resultSet, final int columnIndex) throws SQLException {
         final Timestamp result = resultSet.getTimestamp(columnIndex);
-        if (result == null || resultSet.wasNull()) {
-            return null;
-        }
-        return result.toLocalDateTime();
-    }
-
-    @Override
-    public LocalDateTime getNullableFromResultSet(final ResultSet resultSet, final String columnName) throws SQLException {
-        final Timestamp result = resultSet.getTimestamp(columnName);
         if (result == null || resultSet.wasNull()) {
             return null;
         }

@@ -21,7 +21,9 @@ public interface DataType<T> {
 
     T getNullableFromResultSet(ResultSet resultSet, int columnIndex) throws SQLException;
 
-    T getNullableFromResultSet(ResultSet resultSet, String columnName) throws SQLException;
+    default T getNullableFromResultSet(ResultSet resultSet, String columnName) throws SQLException {
+        return getNullableFromResultSet(resultSet, resultSet.findColumn(columnName));
+    }
 
     void setNullableToPreparedStatement(PreparedStatement preparedStatement, int parameterIndex, T value) throws SQLException;
 }

@@ -17,11 +17,6 @@ public class BigDecimalDataType implements DataType<BigDecimal> {
     }
 
     @Override
-    public BigDecimal getNullableFromResultSet(final ResultSet resultSet, final String columnName) throws SQLException {
-        return resultSet.getBigDecimal(columnName);
-    }
-
-    @Override
     public void setNullableToPreparedStatement(final PreparedStatement preparedStatement, final int parameterIndex, final BigDecimal value) throws SQLException {
         preparedStatement.setObject(parameterIndex, value, Types.DECIMAL);
     }

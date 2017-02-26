@@ -20,15 +20,6 @@ public class DoubleDataType implements DataType<Double> {
     }
 
     @Override
-    public Double getNullableFromResultSet(final ResultSet resultSet, final String columnName) throws SQLException {
-        final double result = resultSet.getDouble(columnName);
-        if (resultSet.wasNull()) {
-            return null;
-        }
-        return result;
-    }
-
-    @Override
     public void setNullableToPreparedStatement(final PreparedStatement preparedStatement, final int parameterIndex, final Double value) throws SQLException {
         preparedStatement.setObject(parameterIndex, value, Types.DOUBLE);
     }
