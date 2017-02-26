@@ -1,4 +1,6 @@
-package cz.voho.jdbcis.type;
+package cz.voho.jdbcis.type.nullable;
+
+import cz.voho.jdbcis.type.DataType;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,7 +13,7 @@ import java.sql.Types;
  */
 public class LongDataType implements DataType<Long> {
     @Override
-    public Long getNullableFromResultSet(final ResultSet resultSet, final int columnIndex) throws SQLException {
+    public Long getFromResultSet(final ResultSet resultSet, final int columnIndex) throws SQLException {
         final long result = resultSet.getLong(columnIndex);
         if (resultSet.wasNull()) {
             return null;
@@ -20,7 +22,7 @@ public class LongDataType implements DataType<Long> {
     }
 
     @Override
-    public void setNullableToPreparedStatement(final PreparedStatement preparedStatement, final int parameterIndex, final Long value) throws SQLException {
+    public void setToPreparedStatement(final PreparedStatement preparedStatement, final int parameterIndex, final Long value) throws SQLException {
         preparedStatement.setObject(parameterIndex, value, Types.BIGINT);
     }
 }

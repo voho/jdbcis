@@ -1,6 +1,6 @@
 package cz.voho.jdbcis.operation;
 
-import cz.voho.jdbcis.type.DataType;
+import cz.voho.jdbcis.type.NullableDataTypes;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -33,6 +33,6 @@ public class TransactionTest extends AbstractOperationTest {
     }
 
     private int getRowCount() throws SQLException {
-        return toTest().queryForSingle("SELECT COUNT(*) AS count FROM t", resultSet -> DataType.INTEGER.getNullableFromResultSet(resultSet, "count"));
+        return toTest().queryForSingle("SELECT COUNT(*) AS count FROM t", resultSet -> NullableDataTypes.INTEGER.getFromResultSet(resultSet, "count"));
     }
 }

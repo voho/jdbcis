@@ -1,6 +1,6 @@
 package cz.voho.jdbcis.operation;
 
-import cz.voho.jdbcis.type.DataType;
+import cz.voho.jdbcis.type.NullableDataTypes;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -12,7 +12,7 @@ public class UpdateQueriesTest extends AbstractOperationTest {
     @Test
     public void updateSingleRowUsingPreparedStatement() throws Exception {
         final long actual = toTest().update("UPDATE t SET c_text = ?", preparedStatement -> {
-            DataType.STRING.setNullableToPreparedStatement(preparedStatement, 1, "updateSingleRowUsingPreparedStatement");
+            NullableDataTypes.STRING.setToPreparedStatement(preparedStatement, 1, "updateSingleRowUsingPreparedStatement");
         });
 
         assertThat(actual).isEqualTo(5L);

@@ -10,20 +10,11 @@ import java.sql.SQLException;
  * Removes the necessity of dealing with the {@link ResultSet#wasNull()} methods.
  */
 public interface DataType<T> {
-    BigDecimalDataType BIG_DECIMAL = new BigDecimalDataType();
-    DateTimeDataType DATE_TIME = new DateTimeDataType();
-    DateDataType DATE = new DateDataType();
-    DoubleDataType DOUBLE = new DoubleDataType();
-    IntegerDataType INTEGER = new IntegerDataType();
-    LongDataType LONG = new LongDataType();
-    StringDataType STRING = new StringDataType();
-    TimeDataType TIME = new TimeDataType();
+    T getFromResultSet(ResultSet resultSet, int columnIndex) throws SQLException;
 
-    T getNullableFromResultSet(ResultSet resultSet, int columnIndex) throws SQLException;
-
-    default T getNullableFromResultSet(ResultSet resultSet, String columnName) throws SQLException {
-        return getNullableFromResultSet(resultSet, resultSet.findColumn(columnName));
+    default T getFromResultSet(ResultSet resultSet, String columnName) throws SQLException {
+        return getFromResultSet(resultSet, resultSet.findColumn(columnName));
     }
 
-    void setNullableToPreparedStatement(PreparedStatement preparedStatement, int parameterIndex, T value) throws SQLException;
+    void setToPreparedStatement(PreparedStatement preparedStatement, int parameterIndex, T value) throws SQLException;
 }

@@ -1,7 +1,7 @@
 package cz.voho.jdbcis.operation.model;
 
 import cz.voho.jdbcis.operation.RowMapper;
-import cz.voho.jdbcis.type.DataType;
+import cz.voho.jdbcis.type.NullableDataTypes;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -18,30 +18,30 @@ public class TestRow {
         TestRow row = new TestRow();
 
         // primary key
-        row.setcPK(DataType.LONG.getNullableFromResultSet(resultSet, "c_pk"));
+        row.setcPK(NullableDataTypes.LONG.getFromResultSet(resultSet, "c_pk"));
         // other columns
-        row.setcBigDecimal(DataType.BIG_DECIMAL.getNullableFromResultSet(resultSet, "c_decimal"));
-        row.setcLocalDate(DataType.DATE.getNullableFromResultSet(resultSet, "c_date"));
-        row.setcLocalDateTime(DataType.DATE_TIME.getNullableFromResultSet(resultSet, "c_timestamp"));
-        row.setcDouble(DataType.DOUBLE.getNullableFromResultSet(resultSet, "c_double"));
-        row.setcInteger(DataType.INTEGER.getNullableFromResultSet(resultSet, "c_integer"));
-        row.setcLong(DataType.LONG.getNullableFromResultSet(resultSet, "c_bigint"));
-        row.setcShortString(DataType.STRING.getNullableFromResultSet(resultSet, "c_varchar"));
-        row.setcLongString(DataType.STRING.getNullableFromResultSet(resultSet, "c_text"));
-        row.setcLocalTime(DataType.TIME.getNullableFromResultSet(resultSet, "c_time"));
+        row.setcBigDecimal(NullableDataTypes.BIG_DECIMAL.getFromResultSet(resultSet, "c_decimal"));
+        row.setcLocalDate(NullableDataTypes.DATE.getFromResultSet(resultSet, "c_date"));
+        row.setcLocalDateTime(NullableDataTypes.DATE_TIME.getFromResultSet(resultSet, "c_timestamp"));
+        row.setcDouble(NullableDataTypes.DOUBLE.getFromResultSet(resultSet, "c_double"));
+        row.setcInteger(NullableDataTypes.INTEGER.getFromResultSet(resultSet, "c_integer"));
+        row.setcLong(NullableDataTypes.LONG.getFromResultSet(resultSet, "c_bigint"));
+        row.setcShortString(NullableDataTypes.STRING.getFromResultSet(resultSet, "c_varchar"));
+        row.setcLongString(NullableDataTypes.STRING.getFromResultSet(resultSet, "c_text"));
+        row.setcLocalTime(NullableDataTypes.TIME.getFromResultSet(resultSet, "c_time"));
 
         // primary key
-        assertThat(DataType.LONG.getNullableFromResultSet(resultSet, 1)).isEqualTo(row.getcPK());
+        assertThat(NullableDataTypes.LONG.getFromResultSet(resultSet, 1)).isEqualTo(row.getcPK());
         // other columns
-        assertThat(DataType.BIG_DECIMAL.getNullableFromResultSet(resultSet, 2)).isEqualTo(row.getcBigDecimal());
-        assertThat(DataType.DATE.getNullableFromResultSet(resultSet, 3)).isEqualTo(row.getcLocalDate());
-        assertThat(DataType.DATE_TIME.getNullableFromResultSet(resultSet, 4)).isEqualTo(row.getcLocalDateTime());
-        assertThat(DataType.DOUBLE.getNullableFromResultSet(resultSet, 5)).isEqualTo(row.getcDouble());
-        assertThat(DataType.INTEGER.getNullableFromResultSet(resultSet, 6)).isEqualTo(row.getcInteger());
-        assertThat(DataType.LONG.getNullableFromResultSet(resultSet, 7)).isEqualTo(row.getcLong());
-        assertThat(DataType.STRING.getNullableFromResultSet(resultSet, 8)).isEqualTo(row.getcShortString());
-        assertThat(DataType.STRING.getNullableFromResultSet(resultSet, 9)).isEqualTo(row.getcLongString());
-        assertThat(DataType.TIME.getNullableFromResultSet(resultSet, 10)).isEqualTo(row.getcLocalTime());
+        assertThat(NullableDataTypes.BIG_DECIMAL.getFromResultSet(resultSet, 2)).isEqualTo(row.getcBigDecimal());
+        assertThat(NullableDataTypes.DATE.getFromResultSet(resultSet, 3)).isEqualTo(row.getcLocalDate());
+        assertThat(NullableDataTypes.DATE_TIME.getFromResultSet(resultSet, 4)).isEqualTo(row.getcLocalDateTime());
+        assertThat(NullableDataTypes.DOUBLE.getFromResultSet(resultSet, 5)).isEqualTo(row.getcDouble());
+        assertThat(NullableDataTypes.INTEGER.getFromResultSet(resultSet, 6)).isEqualTo(row.getcInteger());
+        assertThat(NullableDataTypes.LONG.getFromResultSet(resultSet, 7)).isEqualTo(row.getcLong());
+        assertThat(NullableDataTypes.STRING.getFromResultSet(resultSet, 8)).isEqualTo(row.getcShortString());
+        assertThat(NullableDataTypes.STRING.getFromResultSet(resultSet, 9)).isEqualTo(row.getcLongString());
+        assertThat(NullableDataTypes.TIME.getFromResultSet(resultSet, 10)).isEqualTo(row.getcLocalTime());
 
         return row;
     };

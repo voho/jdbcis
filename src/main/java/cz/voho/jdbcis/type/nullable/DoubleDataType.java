@@ -1,4 +1,6 @@
-package cz.voho.jdbcis.type;
+package cz.voho.jdbcis.type.nullable;
+
+import cz.voho.jdbcis.type.DataType;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,7 +13,7 @@ import java.sql.Types;
  */
 public class DoubleDataType implements DataType<Double> {
     @Override
-    public Double getNullableFromResultSet(final ResultSet resultSet, final int columnIndex) throws SQLException {
+    public Double getFromResultSet(final ResultSet resultSet, final int columnIndex) throws SQLException {
         final double result = resultSet.getDouble(columnIndex);
         if (resultSet.wasNull()) {
             return null;
@@ -20,7 +22,7 @@ public class DoubleDataType implements DataType<Double> {
     }
 
     @Override
-    public void setNullableToPreparedStatement(final PreparedStatement preparedStatement, final int parameterIndex, final Double value) throws SQLException {
+    public void setToPreparedStatement(final PreparedStatement preparedStatement, final int parameterIndex, final Double value) throws SQLException {
         preparedStatement.setObject(parameterIndex, value, Types.DOUBLE);
     }
 }

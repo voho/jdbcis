@@ -1,7 +1,7 @@
 package cz.voho.jdbcis.operation;
 
 import cz.voho.jdbcis.operation.model.TestRow;
-import cz.voho.jdbcis.type.DataType;
+import cz.voho.jdbcis.type.NullableDataTypes;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -14,7 +14,7 @@ public class SingleQueriesTest extends AbstractOperationTest {
     public void queryForSingleRowUsingPreparedStatement() throws Exception {
         final TestRow row = toTest().queryForSingle(
                 "SELECT c_pk,c_decimal,c_date,c_timestamp,c_double,c_integer,c_bigint,c_varchar,c_text,c_time FROM t WHERE c_pk = ?",
-                preparedStatement -> DataType.LONG.setNullableToPreparedStatement(preparedStatement, 1, 1L),
+                preparedStatement -> NullableDataTypes.LONG.setToPreparedStatement(preparedStatement, 1, 1L),
                 TestRow.ROW_MAPPER);
 
         assertThat(row.getcLongString()).isEqualTo("Predefined-1");
