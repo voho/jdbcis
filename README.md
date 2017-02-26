@@ -1,6 +1,8 @@
 # JDBCis
 
-[![Travis](https://travis-ci.org/voho/jdbcis.svg?branch=master)](https://travis-ci.org/voho/jdbcis) [![codecov.io](https://codecov.io/github/voho/jdbcis/coverage.svg?branch=master)](https://codecov.io/github/voho/jdbcis?branch=master)
+[![Travis](https://travis-ci.org/voho/jdbcis.svg?branch=master)](https://travis-ci.org/voho/jdbcis) 
+[![codecov.io](https://codecov.io/github/voho/jdbcis/coverage.svg?branch=master)](https://codecov.io/github/voho/jdbcis?branch=master)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/a3439d1582cc405788b5e1d4d8fda8e7)](https://www.codacy.com/app/vojtech-hordejcuk/jdbcis?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=voho/jdbcis&amp;utm_campaign=Badge_Grade)
 
 Thin layer on top of JDBC providing higher-level abstractions and convenience operations.
 
