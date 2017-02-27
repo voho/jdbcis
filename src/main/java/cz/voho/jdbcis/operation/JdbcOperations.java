@@ -30,12 +30,11 @@ public class JdbcOperations implements SelectJdbcOperations, InsertJdbcOperation
     @Override
     public <T> List<T> queryForList(final String sql, final PreparedStatementSetter preparedStatementSetter, final RowMapper<T> rowMapper) throws SQLException {
         final Connection connection = acquireConnection();
-        final List<T> result = new ArrayList<T>();
+        final List<T> result = new ArrayList<>();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            if (preparedStatementSetter != null) {
-                preparedStatementSetter.apply(preparedStatement);
-            }
+            applyPreparedStatementSetter(preparedStatementSetter, preparedStatement);
+
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
                     final T mappedRow = rowMapper.apply(resultSet);
@@ -85,9 +84,7 @@ public class JdbcOperations implements SelectJdbcOperations, InsertJdbcOperation
         final Connection connection = acquireConnection();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            if (preparedStatementSetter != null) {
-                preparedStatementSetter.apply(preparedStatement);
-            }
+            applyPreparedStatementSetter(preparedStatementSetter, preparedStatement);
 
             final int affectedRows = preparedStatement.executeUpdate();
 
@@ -133,22 +130,12 @@ public class JdbcOperations implements SelectJdbcOperations, InsertJdbcOperation
         final Connection connection = acquireConnection();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            if (preparedStatementSetter != null) {
-                preparedStatementSetter.apply(preparedStatement);
-            }
+            applyPreparedStatementSetter(preparedStatementSetter, preparedStatement);
 
             return preparedStatement.executeUpdate();
         } finally {
             releaseConnection(connection);
         }
-    }
-
-    private Connection acquireConnection() throws SQLException {
-        return connectionManager.acquireConnection();
-    }
-
-    private void releaseConnection(final Connection connection) throws SQLException {
-        connectionManager.releaseConnection(connection);
     }
 
     @Override
@@ -166,6 +153,20 @@ public class JdbcOperations implements SelectJdbcOperations, InsertJdbcOperation
         } finally {
             connection.setAutoCommit(previousAutoCommit);
             releaseConnection(connection);
+        }
+    }
+
+    private Connection acquireConnection() throws SQLException {
+        return connectionManager.acquireConnection();
+    }
+
+    private void releaseConnection(final Connection connection) throws SQLException {
+        connectionManager.releaseConnection(connection);
+    }
+
+    private void applyPreparedStatementSetter(PreparedStatementSetter preparedStatementSetter, PreparedStatement preparedStatement) throws SQLException {
+        if (preparedStatementSetter != null) {
+            preparedStatementSetter.apply(preparedStatement);
         }
     }
 }
