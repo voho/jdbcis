@@ -6,6 +6,10 @@ import org.junit.Test;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
+import java.util.OptionalDouble;
+import java.util.OptionalInt;
+import java.util.OptionalLong;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -56,5 +60,17 @@ public class DataTypeTest extends AbstractOperationTest {
         assertThat(toTest().insert("INSERT INTO e (c_bigint) VALUES (?)", ps -> NullableDataTypes.LONG.setToPreparedStatement(ps, 1, null))).isEqualTo(1L);
         assertThat(toTest().insert("INSERT INTO e (c_text) VALUES (?)", ps -> NullableDataTypes.STRING.setToPreparedStatement(ps, 1, null))).isEqualTo(1L);
         assertThat(toTest().insert("INSERT INTO e (c_time) VALUES (?)", ps -> NullableDataTypes.TIME.setToPreparedStatement(ps, 1, null))).isEqualTo(1L);
+    }
+
+    @Test
+    public void testWritingEmptyOptionalDataTypes() throws SQLException {
+        assertThat(toTest().insert("INSERT INTO e (c_decimal) VALUES (?)", ps -> OptionalDataTypes.BIG_DECIMAL.setToPreparedStatement(ps, 1, Optional.empty()))).isEqualTo(1L);
+        assertThat(toTest().insert("INSERT INTO e (c_date) VALUES (?)", ps -> OptionalDataTypes.DATE.setToPreparedStatement(ps, 1, Optional.empty()))).isEqualTo(1L);
+        assertThat(toTest().insert("INSERT INTO e (c_timestamp) VALUES (?)", ps -> OptionalDataTypes.DATE_TIME.setToPreparedStatement(ps, 1, Optional.empty()))).isEqualTo(1L);
+        assertThat(toTest().insert("INSERT INTO e (c_double) VALUES (?)", ps -> OptionalDataTypes.DOUBLE.setToPreparedStatement(ps, 1, OptionalDouble.empty()))).isEqualTo(1L);
+        assertThat(toTest().insert("INSERT INTO e (c_integer) VALUES (?)", ps -> OptionalDataTypes.INTEGER.setToPreparedStatement(ps, 1, OptionalInt.empty()))).isEqualTo(1L);
+        assertThat(toTest().insert("INSERT INTO e (c_bigint) VALUES (?)", ps -> OptionalDataTypes.LONG.setToPreparedStatement(ps, 1, OptionalLong.empty()))).isEqualTo(1L);
+        assertThat(toTest().insert("INSERT INTO e (c_text) VALUES (?)", ps -> OptionalDataTypes.STRING.setToPreparedStatement(ps, 1, Optional.empty()))).isEqualTo(1L);
+        assertThat(toTest().insert("INSERT INTO e (c_time) VALUES (?)", ps -> OptionalDataTypes.TIME.setToPreparedStatement(ps, 1, Optional.empty()))).isEqualTo(1L);
     }
 }
